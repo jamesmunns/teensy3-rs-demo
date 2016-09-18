@@ -1,0 +1,23 @@
+[root]
+name = "teensy3-rs-demo"
+version = "0.1.0"
+dependencies = [
+ "teensy3 0.1.0 (git+https://github.com/jamesmunns/teensy3-rs)",
+]
+
+[[package]]
+name = "teensy3"
+version = "0.1.0"
+source = "git+https://github.com/jamesmunns/teensy3-rs#e29b808d42b4160f0ec17daf7133d055daa78a8a"
+dependencies = [
+ "teensy3-sys 0.1.0 (git+https://github.com/jamesmunns/teensy3-sys-rs)",
+]
+
+[[package]]
+name = "teensy3-sys"
+version = "0.1.0"
+source = "git+https://github.com/jamesmunns/teensy3-sys-rs#266ba8963190b68810510fb92d2038bdbcdfd97b"
+
+[metadata]
+"checksum teensy3 0.1.0 (git+https://github.com/jamesmunns/teensy3-rs)" = "<none>"
+"checksum teensy3-sys 0.1.0 (git+https://github.com/jamesmunns/teensy3-sys-rs)" = "<none>"
