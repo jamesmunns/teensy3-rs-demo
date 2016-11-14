@@ -3,9 +3,12 @@
 
 #[macro_use]
 extern crate teensy3;
+extern crate futures;
 
 use teensy3::bindings;
 use teensy3::serial::Serial;
+
+mod future_demo;
 
 #[no_mangle]
 pub unsafe extern fn main() {

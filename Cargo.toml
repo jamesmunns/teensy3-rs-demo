@@ -6,6 +6,10 @@ authors = ["Simon Sapin <simon.sapin@exyr.org>", "James Munns <james.munns@gmail
 [dependencies]
 teensy3 = "0.1"
 
+[dependencies.futures]
+version = "0.1"
+default-features = false
+
 [profile.dev]
 panic = "abort"
 
