@@ -3,8 +3,9 @@ name = "teensy3-rs-demo"
 version = "0.1.0"
 authors = ["Simon Sapin <simon.sapin@exyr.org>", "James Munns <james.munns@gmail.com>"]
 
-[dependencies]
-teensy3 = "0.1"
+[dependencies.teensy3]
+path = "../teensy3-rs/teensy3"
+features = ["teensy_3_5"]
 
 [profile.dev]
 panic = "abort"
