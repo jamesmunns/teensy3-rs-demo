@@ -6,13 +6,26 @@ extern crate teensy3;
 
 use teensy3::bindings;
 use teensy3::serial::Serial;
+use teensy3::util::{
+    digital_write,
+    digital_read,
+    pin_mode,
+    delay,
+    PinMode
+};
+
+fn read_analog(pin_id: u8) -> u8
+{
+    unimplemented!()
+}
 
 #[no_mangle]
-pub unsafe extern fn main() {
+pub extern fn main() {
     // Blink Loop
 
-    bindings::pinMode(13, bindings::OUTPUT as u8);
-    bindings::digitalWrite(13, bindings::LOW as u8);
+    pin_mode(13, PinMode::Output);
+    digital_write(13, false);
+
     let mut ser = Serial{};
 
     loop {
@@ -23,19 +36,19 @@ pub unsafe extern fn main() {
         hello(&ser).unwrap();
 
         // Don't spam the console
-        bindings::delay(1000);
+        delay(1000);
     }
 }
 
 /// Blink the light twice to know we're alive
-pub unsafe fn alive() {
+pub fn alive() {
     for _ in 0..2 {
-        bindings::digitalWrite(13, bindings::LOW as u8);
-        bindings::delay(200);
-        bindings::digitalWrite(13, bindings::HIGH as u8);
-        bindings::delay(200);
-        bindings::digitalWrite(13, bindings::LOW as u8);
-        bindings::delay(200);
+        digital_write(13, false);
+        delay(200);
+        digital_write(13, true);
+        delay(200);
+        digital_write(13, false);
+        delay(200);
     }
 }
 
