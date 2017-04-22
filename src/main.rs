@@ -14,11 +14,6 @@ use teensy3::util::{
     PinMode
 };
 
-fn read_analog(pin_id: u8) -> u8
-{
-    unimplemented!()
-}
-
 #[no_mangle]
 pub extern fn main() {
     // Blink Loop
