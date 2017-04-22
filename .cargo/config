@@ -38,6 +38,9 @@ rustflags = [
     "-C", "link-arg=-mthumb",
     "-C", "link-arg=-Os",
     "-C", "link-arg=--specs=nano.specs",
+
+    "-C", "link-arg=-mfloat-abi=hard",
+    "-C", "link-arg=-mfpu=fpv4-sp-d16",
 ]
 
 
