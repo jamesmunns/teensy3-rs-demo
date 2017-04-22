@@ -4,34 +4,33 @@
 #[macro_use]
 extern crate teensy3;
 
-use teensy3::bindings;
 use teensy3::serial::Serial;
 use teensy3::util::{
     digital_write,
-    digital_read,
+    analog_read,
+    analog_write,
     pin_mode,
     delay,
     PinMode
 };
+
+mod motor;
 
 #[no_mangle]
 pub extern fn main() {
     // Blink Loop
 
     pin_mode(13, PinMode::Output);
-    digital_write(13, false);
+    pin_mode(14, PinMode::Input);
+    digital_write(13, true);
 
-    let mut ser = Serial{};
+    let motor = motor::HBridge::new(20, (19, 18));
+
+    let ser = Serial{};
 
     loop {
-        // Show we are alive
-        alive();
-
-        // If the serial write fails, we will halt (no more alive blinks)
-        hello(&ser).unwrap();
-
-        // Don't spam the console
-        delay(1000);
+        motor.set_state(motor::HBridgeState::Forward, (analog_read(14) / 4) as u8);
+        delay(10);
     }
 }
 
