@@ -4,38 +4,45 @@
 #[macro_use]
 extern crate teensy3;
 
-use teensy3::bindings;
 use teensy3::serial::Serial;
+use teensy3::util::{
+    digital_write,
+    analog_read,
+    analog_write,
+    pin_mode,
+    delay,
+    PinMode
+};
+
+mod motor;
 
 #[no_mangle]
-pub unsafe extern fn main() {
+pub extern fn main() {
     // Blink Loop
 
-    bindings::pinMode(13, bindings::OUTPUT as u8);
-    bindings::digitalWrite(13, bindings::LOW as u8);
-    let mut ser = Serial{};
+    pin_mode(13, PinMode::Output);
+    pin_mode(14, PinMode::Input);
+    digital_write(13, true);
+
+    let motor = motor::HBridge::new(20, (19, 18));
+
+    let ser = Serial{};
 
     loop {
-        // Show we are alive
-        alive();
-
-        // If the serial write fails, we will halt (no more alive blinks)
-        hello(&ser).unwrap();
-
-        // Don't spam the console
-        bindings::delay(1000);
+        motor.set_state(motor::HBridgeState::Forward, (analog_read(14) / 4) as u8);
+        delay(10);
     }
 }
 
 /// Blink the light twice to know we're alive
-pub unsafe fn alive() {
+pub fn alive() {
     for _ in 0..2 {
-        bindings::digitalWrite(13, bindings::LOW as u8);
-        bindings::delay(200);
-        bindings::digitalWrite(13, bindings::HIGH as u8);
-        bindings::delay(200);
-        bindings::digitalWrite(13, bindings::LOW as u8);
-        bindings::delay(200);
+        digital_write(13, false);
+        delay(200);
+        digital_write(13, true);
+        delay(200);
+        digital_write(13, false);
+        delay(200);
     }
 }
 
