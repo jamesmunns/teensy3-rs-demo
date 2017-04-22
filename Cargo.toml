@@ -5,10 +5,12 @@ authors = ["Simon Sapin <simon.sapin@exyr.org>", "James Munns <james.munns@gmail
 
 [dependencies.teensy3]
 path = "../teensy3-rs/teensy3"
-features = ["teensy_3_5"]
+features = ["teensy_3_2"]
 
 [profile.dev]
 panic = "abort"
+lto = true
 
 [profile.release]
 panic = "abort"
+lto = true

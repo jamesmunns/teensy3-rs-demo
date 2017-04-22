@@ -1,19 +1,46 @@
-[build]
-target = "thumbv7em-none-eabi"
-
+# Teensy 3.0, 3.1, 3.2
 [target.thumbv7em-none-eabi]
 rustflags = [
-    "-C", "link-arg=-mcpu=cortex-m4",
-    "-C", "link-arg=-mthumb",
-    "-C", "link-arg=-Tmk64fx512.ld",
-    "-C", "link-arg=-Os",
+    # Use the linker script automatically provided by
+    #   teensy3-sys
+    "-C", "link-arg=-Tteensy3-sys.ld",
+
     "-C", "link-arg=-Wl,--gc-sections,--defsym=__rtc_localtime=0",
-    "-C", "link-arg=--specs=nano.specs",
-    "-C", "link-arg=-lm",
     "-C", "link-arg=-Wl,--start-group",
+    "-C", "link-arg=-Wl,--end-group",
+
+    "-C", "link-arg=-lm",
     "-C", "link-arg=-lnosys",
     "-C", "link-arg=-lc",
     "-C", "link-arg=-lgcc",
-    "-C", "link-arg=-Wl,--end-group",
-#    "-C", "link-arg=-larm_cortexM4lf_math",
+    "-C", "link-arg=-mcpu=cortex-m4",
+    "-C", "link-arg=-mthumb",
+    "-C", "link-arg=-Os",
+    "-C", "link-arg=--specs=nano.specs",
 ]
+
+# Teensy 3.5, 3.6
+[target.thumbv7em-none-eabihf]
+rustflags = [
+    # Use the linker script automatically provided by
+    #   teensy3-sys
+    "-C", "link-arg=-Tteensy3-sys.ld",
+
+    "-C", "link-arg=-Wl,--gc-sections,--defsym=__rtc_localtime=0",
+    "-C", "link-arg=-Wl,--start-group",
+    "-C", "link-arg=-Wl,--end-group",
+
+    "-C", "link-arg=-lm",
+    "-C", "link-arg=-lnosys",
+    "-C", "link-arg=-lc",
+    "-C", "link-arg=-lgcc",
+    "-C", "link-arg=-mcpu=cortex-m4",
+    "-C", "link-arg=-mthumb",
+    "-C", "link-arg=-Os",
+    "-C", "link-arg=--specs=nano.specs",
+]
+
+
+# Can this be handled when generating the static library instead?
+#   as long as the rust crate doesn't link directly against intrinsics?
+##    "-C", "link-arg=-larm_cortexM4lf_math",
